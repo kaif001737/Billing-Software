@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 40px;
+      font-size: 14px;
+    }
+
+    .header, .footer {
+      text-align: center;
+    }
+
+    .header h2 {
+      margin: 0;
+    }
+
+    .section {
+      margin-top: 20px;
+    }
+
+    .section table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .section table, .section th, .section td {
+      border: 1px solid #000;
+    }
+
+    .section th, .section td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    .totals td {
+      text-align: right;
+    }
+
+    .no-border {
+      border: none;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .signature {
+      margin-top: 40px;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h2>SRI DHANALAKSHMI TEX</h2>
+    <p>12-172A, Perumagoundanur, Periyasoragai (Po), Nangavalli (Via),<br>
+    Mettur (Tk), Salem (Dt) - 636454</p>
+    <p>GSTIN: 33ANKPK9224F1Z1 | PH: 87543 79090</p>
+    <h3><u>TAX INVOICE</u></h3>
+  </div>
+
+  <div class="section">
+    <table>
+      <tr>
+        <td><strong>Invoice No:</strong> {{ invoice[0] }}</td>
+        <td colspan="3"><strong>Date:</strong> 
+          {% if invoice[16] is defined %}
+            {{ invoice[16].strftime('%d-%m-%Y') }}
+          {% else %}
+            -
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong>To:</strong> {{ invoice[1] }}, {{ invoice[2] }}</td>
+        <td colspan="2"><strong>Shipping:</strong> {{ invoice[1] }}, {{ invoice[2] }}</td>
+      </tr>
+      <tr>
+        <td><strong>GSTIN:</strong> {{ invoice[3] }}</td>
+        <td><strong>Phone 1:</strong> {{ invoice[4] }}</td>
+        <td><strong>Phone 2:</strong> {{ invoice[5] }}</td>
+        <td><strong>Bale No:</strong> ____________</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <table>
+      <thead>
+        <tr>
+          <th>S No</th>
+          <th>HSN</th>
+          <th>Particulars</th>
+          <th>Qty</th>
+          <th>Rate</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>{{ invoice[7] }}</td>
+          <td>{{ invoice[6] }}</td>
+          <td>{{ invoice[8] }}</td>
+          <td>{{ "%.2f"|format(invoice[9]) }}</td>
+          <td>{{ "%.2f"|format(invoice[10]) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <table>
+      <tr class="totals">
+        <td colspan="5"><strong>SUB TOTAL</strong></td>
+        <td>{{ "%.2f"|format(invoice[10]) }}</td>
+      </tr>
+      <tr class="totals">
+        <td colspan="5">CGST @ 2.5%</td>
+        <td>{{ "%.2f"|format(invoice[11]) }}</td>
+      </tr>
+      <tr class="totals">
+        <td colspan="5">SGST @ 2.5%</td>
+        <td>{{ "%.2f"|format(invoice[12]) }}</td>
+      </tr>
+      <tr class="totals">
+        <td colspan="5">IGST @ 5%</td>
+        <td>{{ "%.2f"|format(invoice[13]) }}</td>
+      </tr>
+      <tr class="totals">
+        <td colspan="5">LESS DISCOUNT</td>
+        <td>{{ "%.2f"|format(invoice[14]) }}</td>
+      </tr>
+      <tr class="totals">
+        <td colspan="5"><strong>NET TOTAL</strong></td>
+        <td><strong>{{ "%.2f"|format(invoice[15]) }}</strong></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <p><strong>Amount in Words:</strong> ________________________________________</p>
+    <p><strong>Terms & Conditions:</strong> _________________________________</p>
+    <p><strong>Reverse Charge (Y/N):</strong> NO</p>
+  </div>
+
+  <div class="section">
+    <p><strong>Bank Details:</strong><br>
+    A/C No : 58480200000347<br>
+    IFSC No : BARB0JALAKA<br>
+    Branch : JALAKANDAPURAM
+    </p>
+  </div>
+
+  <div class="signature">
+    <p>For SRI DHANALAKSHMI TEX</p>
+    <br><br>
+    <p><strong>Authorised Signature</strong></p>
+  </div>
+
+</body>
+</html>
